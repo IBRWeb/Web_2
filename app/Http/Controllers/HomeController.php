@@ -1,36 +1,28 @@
 <?php namespace App\Http\Controllers;
 
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
+use App\Http\Helpers\FacebookGraphApiRequest;
+use App\Http\Helpers\FacebookPostHandler;
+
 class HomeController extends Controller {
 
-	/*
-	|--------------------------------------------------------------------------
-	| Home Controller
-	|--------------------------------------------------------------------------
-	|
-	| This controller renders your application's "dashboard" for users that
-	| are authenticated. Of course, you are free to change or remove the
-	| controller as you wish. It is just here to get your app started!
-	|
-	*/
-
+	protected $facebookGraphApiRequest;
 	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
-	public function __construct()
-	{
-		$this->middleware('auth');
-	}
-
-	/**
-	 * Show the application dashboard to the user.
+	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
 	public function index()
 	{
-		return view('home');
+		$facebookGraphApiRequest = new FacebookGraphApiRequest;
+		$facebookGraphApiRequest -> request('GET', '/215181911937130/posts?fields=id,type&limit=15');
+		$responseDataArray = $facebookGraphApiRequest -> getResponseDataArray();
+		
+		$posts_id = FacebookPostHandler::getPostsId($responseDataArray);
+		$data     = ['posts_id' => $posts_id];
+		
+		return view('webpage.home', $data);
 	}
-
 }

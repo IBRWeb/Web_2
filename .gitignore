@@ -3,3 +3,5 @@
 .env
 *.sublime-project
 *.sublime-workspace
+_ide_helper.php
+/.idea

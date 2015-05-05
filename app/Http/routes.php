@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Requests\WebPageRequest;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -10,10 +12,22 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+// Route::get('/{controller?}/{action?}', function($controller = 'home', $action = 'index'){
+// 	$request        = new WebPageRequest($controller, $action);
+// 	// $controller     = $request -> getController();
+// 	// $action         = $request -> getAction();
+// 	// $controllerPath = $request -> getControllerPath();
+// 	$controller = $request -> callController();
+// 	dd($controller);
 
-Route::get('/', 'WelcomeController@index');
+// 	// $parameters = compact('controller', 'action', 'controllerPath');
+// 	// $method = 'GET';
+// 	// $controller -> callAction($method, $parameters);
 
-Route::get('home', 'HomeController@index');
+// });
+
+Route::get('/', 'HomeController@index');
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
