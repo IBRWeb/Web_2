@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Requests\WebPageRequest;
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -12,21 +10,11 @@ use App\Http\Requests\WebPageRequest;
 | and give it the controller to call when that URI is requested.
 |
 */
-// Route::get('/{controller?}/{action?}', function($controller = 'home', $action = 'index'){
-// 	$request        = new WebPageRequest($controller, $action);
-// 	// $controller     = $request -> getController();
-// 	// $action         = $request -> getAction();
-// 	// $controllerPath = $request -> getControllerPath();
-// 	$controller = $request -> callController();
-// 	dd($controller);
 
-// 	// $parameters = compact('controller', 'action', 'controllerPath');
-// 	// $method = 'GET';
-// 	// $controller -> callAction($method, $parameters);
-
-// });
 
 Route::get('/', 'HomeController@index');
+
+Route::get('/{view}', 'WebPageController@index');
 
 
 Route::controllers([

@@ -24,8 +24,9 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     
     @yield('scripts')
-    
-    <title>Iglesia Bautista Resurrección</title>
+
+    @yield('title', '<title>Iglesia Bautista Resurrección</title>')
+
   </head>
   <body>
 
@@ -35,11 +36,11 @@
       <nav class="navigation">
         <ul class="navigation_list flexbox wrap align_center">
           <a href="/" class="navigation_item"><li>Inicio</li></a>
-          <a href="historia.html" class="navigation_item"><li>Quienes Somos</li></a>
-          <a href="calendario.html" class="navigation_item"><li>Calendario</li></a>
-          <a href="devocional.html" class="navigation_item"><li>Devocional</li></a>
-          <a href="biblia.html" class="navigation_item"><li>Lee tu Biblia</li></a>
-          <a href="contacto.html" class="navigation_item"><li>Contacto</li></a>
+          <a href="historia" class="navigation_item"><li>Quienes Somos</li></a>
+          <a href="calendario" class="navigation_item"><li>Calendario</li></a>
+          <a href="devocional" class="navigation_item"><li>Devocional</li></a>
+          <a href="biblia" class="navigation_item"><li>Lee tu Biblia</li></a>
+          <a href="contacto" class="navigation_item"><li>Contacto</li></a>
         </ul>
       </nav>
       <h1 class="title hide">Iglesia Bautista Resurrección</h1>
@@ -50,7 +51,7 @@
     <footer>
       <section class="flexbox justify_center padding_1.5/0.1">
         <article class="logo_footer">
-          <figure class="margin_tb extra flexbox">
+          <figure class="margin_full flexbox">
             <img class="logo_img" src="assets/images/logo_img_black.jpg" alt="Logo IBR Iglesia Bautista Resurrección">
             <img class="logo_name hide align_self_center" src="assets/images/logo_name_black.jpg" alt="Logo IBR Iglesia Bautista Resurrección">
           </figure>
@@ -61,7 +62,7 @@
               <figure class="icon_small margin_right margin_right extra">
                 <img src="assets/images/location.jpg" alt="Localización">
               </figure>
-              <address class="margin_right">Convento de Santa Mónica #83 </br>col. Jardines de Santa Mónica.</br> Tlalnepantla, Estado de México. CP 54050</address>
+              <address class="margin_right">Convento de Santa Mónica #83 col. Jardines de Santa Mónica. Tlalnepantla, Estado de México. CP 54050</address>
             </section>
           </a>
           <section class="contact flexbox column medium justify_center">

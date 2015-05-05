@@ -35,7 +35,7 @@
       <img src="assets/images/logo_head.jpg" alt="Logo IBR Iglesia Bautista Resurrección">
     </figure>
     <span id="boton_oracion" class="boton fixed">
-      <a href="oracion.html">
+      <a href="oracion">
         <figure class="margin_zero">
           <img src="assets/images/or.png" width="54" height="151" border="0" alt="Oración" title="Oración" />
         </figure>
@@ -52,18 +52,18 @@
           <li class="list_item">Mi 19:00 - 20:00 Culto de Oración</li>
         </ul>
       </section>
-      <a href="calendario.html">
+      <a href="calendario">
         <section class="events flexbox spc-arr">
           <figure class="icon_med">
             <img  src="assets/images/events.png" alt="Calendario">
           </figure>
-          <p><strong>Conoce nuestras <br> novedades aqui</strong></p>
+          <p><strong>Conoce nuestras novedades aqui</strong></p>
         </section>
       </a>
     <div id ="owl_carousel_container" class="owl-carousel margin_top">
 
       @foreach($posts_id as $post)
-          <div class="fb-post" data-href="https://www.facebook.com/{{ $post[0] }}/posts/{{ $post[1] }}"></div>
+          <div class="fb-post" data-href="https://www.facebook.com/{{ $post[0] }}/posts/{{ $post[1] }}" data-width="730"></div>
       @endforeach
 
     </div>
