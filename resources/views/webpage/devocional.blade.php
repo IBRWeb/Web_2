@@ -1,37 +1,55 @@
 @extends('webpage.layout')
 
 @section('title')
-    <title>{{ $title or 'Devocional' }}</title>
+	<title>Devocional</title>
 @endsection
 
+
 @section('main')
-    <main>
-        <figure class="logo_header medium large text_center margin_zero">
-            <img src="assets/images/devocional.png" alt="Logo IBR Iglesia Bautista Resurrección Calendario">
-        </figure>
-      <span id="boton_oracion" class="boton fixed hide">
-        <a href="oracion">
-            <figure class="margin_zero">
-                <img src="assets/images/or.png" width="54" height="151" border="0" alt="Oración" title="Oración" />
-            </figure>
-        </a>
-      </span>
-        <div class="main flexbox column justify_center align_center">
-            <section class="post flexbox wrap flex_start" id="blog">
-                <article class="article">
-                    <div  class="flexbox flex_start align_center post_title">
-                        <figure class="margin extra">
-                            <img src="assets/images/logo_img_black.jpg" height="46" />
-                        </figure>
-                        <h3 id="blog_title"></h3>
-                    </div>
-                    <div id="blog_text"></div>
-                </article>
-                <section class="article">
-                    <h3>POSTS ANTERIORES:</h3>
-                    <ul id="post_list"></ul>
-                </section>
-            </section>
+	
+	<figure class="logo_header medium large text_center margin_zero">
+        <img src="/assets/images/devocional.png" alt="Logo IBR Iglesia Bautista Resurrección Calendario">
+    </figure>
+
+    <section class="main flexbox justify_center column">
+        <div class="search">
+            {!! Form::open(['url' => 'devocional', 'method' => 'get'] ) !!}
+            {!! Form::text('title', null, ['class' => 'search_box', 'placeholder' => 'Buscar']) !!}
+            {!! Form::button('', ['type' => 'submit', 'class' => 'submit_search icon-search']) !!}
+            {!! Form::close() !!}
         </div>
-    </main>
+
+		@foreach ($devotionalPosts as $devotionalPost)
+
+			<article class="article flexbox align_center">
+                <figure class="margin extra icon_large hide">
+                    <img src="{{  $devotionalPost->image->path_to_file }}" />
+                </figure>
+                <div class="blog_post_preview">
+					
+
+					<a href="{{  route('devotionalPost', [$devotionalPost->slug, $devotionalPost->id]) }} " >
+		                <div  class="flexbox flex_start align_center blog_post_title">
+		                    <h3 id="blog_title">{{ $devotionalPost->title }}</h3>
+		                </div>
+			        </a>
+	                <div id="blog_text">{!! str_limit($devotionalPost->content, 500, '...') !!} </div>
+					<div class="tag_container flexbox wrap">
+						@foreach($devotionalPost->tags as $tag)
+						
+						<a href="{{ route('tagPosts', [$tag->name]) }}" title="{{ $tag->name }}">
+		                	<div class="tag">{{ $tag->name }}</div>
+						</a>
+
+	                	@endforeach
+					</div>
+	                <div class="author">Autor: {{ $devotionalPost->author }}</div>
+                </div>
+            </article>
+
+		@endforeach
+		
+		{!! $devotionalPosts->render() !!}
+	</section>
+
 @endsection

@@ -33,6 +33,11 @@ class AppServiceProvider extends ServiceProvider {
         $this->app->bind('path.public', function() {
             return base_path().'/public_html';
         });
+
+	    if ($this->app->environment() == 'local') {
+	        $this->app->register('Laracasts\Generators\GeneratorsServiceProvider');
+	    }
+
 	}
 
 }

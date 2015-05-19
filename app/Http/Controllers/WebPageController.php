@@ -2,7 +2,7 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Http\Helpers\ResolveView;
+use App\Helpers\ResolveView;
 
 use Illuminate\Http\Request;
 
@@ -17,6 +17,7 @@ class WebPageController extends Controller {
 	 */
 	public function index($view)
 	{
+		// dd("test");
 		$view = new ResolveView($view);
         $viewPath = $view -> getViewPath();
 

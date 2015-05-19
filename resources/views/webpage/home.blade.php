@@ -30,17 +30,10 @@
 @endsection
 
 @section('main')
-  <main>
+
     <figure class="logo_header index small medium large text_center margin_zero">
-      <img src="assets/images/logo_head.jpg" alt="Logo IBR Iglesia Bautista Resurrección">
+      <img src="assets/images/logo_head.png" alt="Logo IBR Iglesia Bautista Resurrección">
     </figure>
-    <span id="boton_oracion" class="boton fixed">
-      <a href="oracion">
-        <figure class="margin_zero">
-          <img src="assets/images/or.png" width="54" height="151" border="0" alt="Oración" title="Oración" />
-        </figure>
-      </a>
-    </span>
     <article id="main" class="flexbox justify_center wrap main">
       <section class="schedule flexbox column justify_center margin_zero">
         <div class="list_title">Horario</div>
@@ -68,6 +61,6 @@
 
     </div>
     </article>
-  </main>
+
 @endsection
     

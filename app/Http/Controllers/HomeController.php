@@ -3,12 +3,15 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Http\Helpers\FacebookGraphApiRequest;
-use App\Http\Helpers\FacebookPostHandler;
+use App\Helpers\FacebookGraphApiRequest;
+use App\Helpers\FacebookPostHandler;
 
 class HomeController extends Controller {
 
 	protected $facebookGraphApiRequest;
+
+
+
 	/**
 	 * Display a listing of the resource.
 	 *

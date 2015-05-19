@@ -52,7 +52,7 @@ return [
 	|
 	*/
 
-	'locale' => 'en',
+	'locale' => 'es',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -151,10 +151,18 @@ return [
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 
         /*
-         *SleepingOwl Administrator
-         */
-        'SleepingOwl\Admin\AdminServiceProvider',
-        'Illuminate\Html\HtmlServiceProvider',
+        * Laravel colective
+        */
+        'Collective\Html\HtmlServiceProvider',
+
+        /*
+        * Admin Panel
+        */
+
+        /*
+        * Debugbar
+        */
+        'Barryvdh\Debugbar\ServiceProvider',
     ],
 
 	/*
@@ -203,19 +211,12 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
 
-        /*
-         * SleepingOwl Administrator Aliases
-         */
-        'Admin'                => 'SleepingOwl\Admin\Admin',
-        'AdminAuth'            => 'SleepingOwl\AdminAuth\Facades\AdminAuth',
-        'AdminRouter'          => 'SleepingOwl\Admin\Facades\AdminRouter',
-        'AssetManager'         => 'SleepingOwl\Admin\AssetManager\AssetManager',
-        'Column'               => 'SleepingOwl\Admin\Columns\Column',
-        'FormItem'             => 'SleepingOwl\Admin\Models\Form\FormItem',
-        'ModelItem'            => 'SleepingOwl\Admin\Models\ModelItem',
+       	/*
+        * Laravel Collective Form $ HTML
+        */
 
-        'Form'      => 'Illuminate\Html\FormFacade',
-        'Html'      => 'Illuminate\Html\HtmlFacade',
+        'Form' => 'Collective\Html\FormFacade',
+      	'Html' => 'Collective\Html\HtmlFacade',
 
 	],
 
