@@ -1,6 +1,6 @@
 {
-	"name": "laravel/laravel",
-	"description": "The Laravel Framework.",
+	"name": "IBR/IBR_Web",
+	"description": "IBR Webpage",
 	"keywords": ["framework", "laravel"],
 	"license": "MIT",
 	"type": "project",
