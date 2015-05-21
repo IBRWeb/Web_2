@@ -14,8 +14,6 @@
 
 Route::get('/', 'HomeController@index');
 
-Route::resource('oracion', 'PrayerController', ['except' => ['edit', 'update', 'destroy']]);
-
 Route::get('devocional', 'DevotionalController@index');
 
 Route::get('devocional/{slug}', ['as' => 'lookForDevotionalPostBySlug', 'uses' => 'DevotionalController@lookForPostBySlug']);
@@ -24,11 +22,13 @@ Route::get('devocional/{slug}/{id}', ['as' => 'devotionalPost', 'uses' => 'Devot
 
 Route::get('devocional/tag/{tag}', ['as' => 'tagPosts', 'uses' => 'DevotionalController@tagPosts' ]);
 
-// Route::post('/contacto', '')
+Route::resource('oracion', 'PrayerController', ['except' => ['edit', 'update', 'destroy']]);
 
-Route::get('test', function() {return view('emails.prayer');});
+Route::get('contacto', 'ContactController@index');
 
-Route::get('/{view}', 'WebPageController@index')->where('view', '[a-z]+');
+Route::post('contacto', 'ContactController@post');
+
+Route::get('{view}', 'WebPageController@index')->where('view', '[a-z]+');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

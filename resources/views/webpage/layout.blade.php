@@ -53,7 +53,7 @@
     <main>
    
       <span id="boton_oracion" class="boton fixed hide">
-          <a href="/oracion">
+          <a href="{{ route('oracion.index') }}">
               <figure class="margin_zero">
                   <img src="/assets/images/or.png" width="54" height="151" border="0" alt="Oración" title="Oración" />
               </figure>

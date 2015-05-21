@@ -89,6 +89,18 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'street' => [
+            'required_if' => 'El campo :attribute es obligatorio cuando :other esta marcado'
+        ],
+        'town' => [
+            'required_if' => 'El campo :attribute es obligatorio cuando :other esta marcado'
+        ],
+        'state' => [
+            'required_if' => 'El campo :attribute es obligatorio cuando :other esta marcado'
+        ],
+        'country' => [
+            'required_if' => 'El campo :attribute es obligatorio cuando :other esta marcado'
+        ],
     ],
 
     /*
@@ -102,6 +114,18 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name' => 'nombre',
+        'full_name' => 'nombre completo',
+        'email' => 'correo electrónico',
+        'phone' => 'telefono',
+        'visit' => 'Quiero recibir visitas por parte de la Iglesia',
+        'street' => 'calle y numero',
+        'state' => 'estado',
+        'town' => 'municipio',
+        'country' => 'pais',
+        'comments' => 'comentarios',
+        'petitions' => 'peticiones',
+    ],
 
 ];

@@ -1,7 +1,3 @@
-@extends('emails.layout')
-
-@section('main')
-
     <figure class="logo_header index small medium large text_center margin_zero">
         <img src="{{  url('assets/images/logo_head.png') }}" />
     </figure>
@@ -15,16 +11,16 @@
             <p>Esta es la información que recibimos: <br/> (cualquier duda o aclaración háznoslo saber <a class="text_decoration" href="{{url('contacto')}}">aqui)</a></p>
 
             <ul>
-                <li>Nombre :{{ $name }}</li>
+                <li>Nombre :{{ $petitioner_name }}</li>
 
-                @if(isset($phone))
-                    <li>Telefono: {{  $phone }}</li>
+                @if(isset($petitioner_phone))
+                    <li>Telefono: {{  $petitioner_phone }}</li>
                 @endif
 
-                <li>Peticiones: {{ $comments }}</li>
+                <li>Peticiones: {{ $petition }}</li>
 
                 @if(isset($visit))
-                    <li>Direccion: {{ "$street, $town, $state, $country" }}</li>
+                    <li>Direccion: {{ "$address" }}</li>
                 @endif
 
             </ul>
@@ -33,7 +29,5 @@
             <img src="/assets/images/or_girl.png"/>
         </figure>
     </div>
-
-@endsection
 
 

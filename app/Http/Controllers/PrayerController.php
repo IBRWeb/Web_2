@@ -1,24 +1,27 @@
 <?php namespace App\Http\Controllers;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PrayerRequest;
-use Illuminate\Http\Request;
+use App\Helpers\MailSender;
 use App\Pray;
 
 
 class PrayerController extends Controller {
 
-	protected $form;
-	/**
+    public function __construct(Pray $pray, MailSender $mailSender)
+    {
+        $this->pray = $pray;
+        $this->mailSender = $mailSender;
+    }
+   	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
 	public function index()
 	{
-		//
-	}
+        return redirect(route('oracion.create'));
+  	}
 
 	/**
 	 * Show the form for creating a new resource.
@@ -34,23 +37,12 @@ class PrayerController extends Controller {
     * Store the new resource in database
     *
     */
-    public function store(Request $request) {
-
-    	$input = $request->all();
-    	extract($input);
-        return view('emails.prayer', $input);
-
-//        \Mail::send('emails.prayer', $input, function($message) use ($email) {
-//            $message->from('contacto@ibresurreccion.org.mx', 'Contacto Iglesia Bautista Resurrección');
-//            $message->to($email)->subject('Petición de Oración');
-//
-//        });
-
-		
-
-
-
-
+    public function store(PrayerRequest $request)
+    {
+        $data = $request->getData();
+        $pray = $this->pray->create($data);
+        $this->mailSender->prayerMail($pray);
+        return redirect(route('oracion.create'));
     }
 	
 	/**

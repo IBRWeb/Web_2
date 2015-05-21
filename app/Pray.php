@@ -26,5 +26,5 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Pray extends Model {
 
-	protected $fillable = ['petioner_name', 'petitioner_email', 'petitioner_phone', 'petition', 'visit', 'address'];
+	protected $fillable = ['petitioner_name', 'petitioner_email', 'petitioner_phone', 'petition', 'visit', 'address'];
 }
