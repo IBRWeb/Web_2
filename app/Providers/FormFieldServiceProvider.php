@@ -1,7 +1,7 @@
 <?php namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Components\FormFieldBuilder;
+use App\Components\FormField\FormFieldBuilder;
 
 class FormFieldServiceProvider extends ServiceProvider {
 
@@ -24,7 +24,13 @@ class FormFieldServiceProvider extends ServiceProvider {
 	{
 		$this->app->bind('formField', function($app)
         {
-            $formFieldBuilder = new FormFieldBuilder($app['form'], $app['view'],$app['translator'], $app['session.store'], $app['files'] );
+            $formFieldBuilder = new FormFieldBuilder(
+                $app['form'],
+                $app['view'],
+                $app['translator'],
+                $app['session.store'],
+                $app['files'] );
+
             return $formFieldBuilder;
         });
 	}

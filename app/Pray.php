@@ -5,15 +5,15 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * App\Pray
  *
- * @property integer $id 
- * @property string $petitioner_name 
- * @property string $petitioner_phone 
- * @property string $petitioner_email 
- * @property string $petition 
- * @property boolean $visit 
- * @property string $address 
- * @property \Carbon\Carbon $created_at 
- * @property \Carbon\Carbon $updated_at 
+ * @property integer $id
+ * @property string $petitioner_name
+ * @property string $petitioner_phone
+ * @property string $petitioner_email
+ * @property string $petition
+ * @property boolean $visit
+ * @property string $address
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
  * @method static \Illuminate\Database\Query\Builder|\App\Pray whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Pray wherePetitionerName($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Pray wherePetitionerPhone($value)

@@ -145,6 +145,7 @@ return [
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
         'App\Providers\FormFieldServiceProvider',
+        'App\Providers\FacebookFieldServiceProvider',
 
         /*
          * Laravel ide-helper provider
@@ -159,7 +160,7 @@ return [
         /*
         * Admin Panel
         */
-
+        'SleepingOwl\Admin\AdminServiceProvider',
         /*
         * Debugbar
         */
@@ -212,17 +213,31 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
 
-        /*
-         * Custom
-         */
-        'FormField' => 'App\Facades\FormField',
-
        	/*
         * Laravel Collective Form $ HTML
         */
 
         'Form' => 'Collective\Html\FormFacade',
       	'Html' => 'Collective\Html\HtmlFacade',
+
+        /*
+         * Admin Panel Sleeping Owl
+         */
+        'Admin'         => 'SleepingOwl\Admin\Admin',
+        'AdminAuth'     => 'SleepingOwl\AdminAuth\Facades\AdminAuth',
+        'Column'        => 'SleepingOwl\Admin\Columns\Column',
+        'ColumnFilter'  => 'SleepingOwl\Admin\ColumnFilters\ColumnFilter',
+        'Filter'        => 'SleepingOwl\Admin\Filter\Filter',
+        'AdminDisplay'  => 'SleepingOwl\Admin\Display\AdminDisplay',
+        'AdminForm'     => 'SleepingOwl\Admin\Form\AdminForm',
+        'AdminTemplate' => 'SleepingOwl\Admin\Templates\Facade\AdminTemplate',
+        'FormItem'      => 'SleepingOwl\Admin\FormItems\FormItem',
+
+        /*
+         * Custom
+         */
+        'FormField' => 'App\Facades\FormField',
+        'FacebookField'  => 'App\Facades\FacebookField',
 
 	],
 

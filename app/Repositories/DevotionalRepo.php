@@ -1,29 +1,30 @@
 <?php namespace App\Repositories;
 
-use Illuminate\Database\Query\Builder;
 use App\DevotionalPost;
-use App\Tag;
 
 
 class DevotionalRepo {
 
+    public function __construct(DevotionalPost $devotionalPost)
+    {
+        $this->devotionalPost = $devotionalPost;
+    }
+
 	public function getDevotionalPosts($title, $take = 10) {
 
-		 return DevotionalPost::title($title)->with('tags', 'image')->paginate($take);
+		 return $this->devotionalPost->title($title)->with('tags', 'image')->paginate($take);
 
 		
 	}
 
 	public function getPost($id){
 
-		 return DevotionalPost::findOrFail($id);
-
-
+		 return $this->devotionalPost->findOrFail($id);
 	}
 
 	public function getTagPosts($tag) {
 
-		return DevotionalPost::whereHas('tags', function($query) use ($tag)
+		return $this->devotionalPost->whereHas('tags', function($query) use ($tag)
 			{
 				$query->where('name', $tag);
 			})->with('tags', 'image')->paginate(5);
@@ -32,7 +33,7 @@ class DevotionalRepo {
 
 	public function lookForPost($title)
 	{
-		return DevotionalPost::title($title)->paginate(10);
+		return $this->devotionalPost->title($title)->paginate(10);
 	}
 
 }

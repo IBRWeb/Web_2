@@ -11,26 +11,39 @@
 |
 */
 
+Route::group(['namespace' => 'Devotional', 'prefix' => 'devocional'], function()
+{
+    Route::get('/', 'DevotionalController@index');
 
-Route::get('/', 'HomeController@index');
+    Route::get('{slug}', ['as' => 'lookForDevotionalPostBySlug', 'uses' => 'DevotionalController@lookForPostBySlug']);
 
-Route::get('devocional', 'DevotionalController@index');
+    Route::get('{slug}/{id}', ['as' => 'devotionalPost', 'uses' => 'DevotionalController@showPost']);
 
-Route::get('devocional/{slug}', ['as' => 'lookForDevotionalPostBySlug', 'uses' => 'DevotionalController@lookForPostBySlug']);
+    Route::get('tag/{tag}', ['as' => 'tagPosts', 'uses' => 'DevotionalController@tagPosts' ]);
+});
 
-Route::get('devocional/{slug}/{id}', ['as' => 'devotionalPost', 'uses' => 'DevotionalController@showPost']);
+Route::group(['namespace' => 'Gallery', 'prefix' => 'gallery'], function()
+{
+    Route::get('albums', 'GalleryController@showAlbums');
 
-Route::get('devocional/tag/{tag}', ['as' => 'tagPosts', 'uses' => 'DevotionalController@tagPosts' ]);
+    Route::resource('albums.photos', 'GalleryController');
 
-Route::resource('oracion', 'PrayerController', ['except' => ['edit', 'update', 'destroy']]);
-
-Route::get('contacto', 'ContactController@index');
-
-Route::post('contacto', 'ContactController@post');
-
-Route::get('{view}', 'WebPageController@index')->where('view', '[a-z]+');
+});
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+Route::group(['namespace' => 'Webpage'], function()
+{
+    Route::get('/', 'HomeController@index');
+
+    Route::resource('oracion', 'PrayerController', ['except' => ['edit', 'update', 'destroy']]);
+
+    Route::get('contacto', 'ContactController@index');
+
+    Route::post('contacto', 'ContactController@post');
+
+    Route::get('{view}', 'WebPageController@index')->where('view', '[a-z]+');
+});
