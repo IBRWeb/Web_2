@@ -24,7 +24,7 @@ Route::group(['namespace' => 'Devotional', 'prefix' => 'devocional'], function()
 
 Route::group(['namespace' => 'Gallery', 'prefix' => 'gallery'], function()
 {
-    Route::get('albums', 'GalleryController@showAlbums');
+    Route::get('albums', ['as' => 'gallery.albums', 'uses' => 'GalleryController@showAlbums']);
 
     Route::resource('albums.photos', 'GalleryController');
 

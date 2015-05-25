@@ -53,7 +53,7 @@ class FacebookDataResolver {
                     });
                     if(!empty($coverPhoto))
                     {
-                        $coverPhotos[]= $coverPhoto->source;
+                        $coverPhotos[]= $coverPhoto;
                     }
 
                 }

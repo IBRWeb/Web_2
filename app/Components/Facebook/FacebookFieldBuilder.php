@@ -24,6 +24,8 @@ class FacebookFieldBuilder
     protected $response;
     protected $data;
 
+    protected $cacheTime = 480;
+
     protected $defaultCssClasses = [
       'posts'    => 'fb-post',
       'comments' => 'fb-comments',
@@ -107,6 +109,40 @@ class FacebookFieldBuilder
     public function getDefaultFilter()
     {
         return $this->defaultFilter;
+    }
+
+    protected function getRequestPath($request)
+    {
+        $requestParams = http_build_query($request->getParameters());
+        $requestPath = $request->getPath();
+        return $requestPath . '?' . $requestParams;
+    }
+
+    public function getResponse($request)
+    {
+        return $request->execute()->getGraphObject();
+    }
+
+    public function checkCache($request)
+    {
+        $requestPath = $this->getRequestPath($request);
+        if(\Cache::has($requestPath))
+        {
+            return \Cache::get($requestPath);
+        }
+
+        return false;
+
+    }
+
+    public function storeCache($request)
+    {
+        $requestPath = $this->getRequestPath($request);
+        $response = $this->getResponse($request);
+
+        \Cache::put($requestPath, $response, $this->cacheTime);
+
+        return $response;
     }
 
     public function buildMethod(&$attributes)
@@ -196,7 +232,16 @@ class FacebookFieldBuilder
 
     public function buildResponse($request)
     {
-        return $request->execute()->getGraphObject();
+        $cache = $this->checkCache($request);
+
+        if(!$cache)
+        {
+            return $this->storeCache($request);
+        }
+
+        return $cache;
+
+
     }
 
     public function buildData($response)
