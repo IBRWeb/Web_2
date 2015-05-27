@@ -27,21 +27,14 @@ class FacebookFieldBuilder
     protected $cacheTime = 480;
 
     protected $defaultCssClasses = [
-      'posts'    => 'fb-post',
-      'comments' => 'fb-comments',
-      'photos'   => 'fb-photos',
-      'albums'   => 'fb-album',
-      'default'  => 'fb-object'
+      'posts'       => 'fb-post',
+      'comments'    => 'fb-comments',
+      'albumPhotos' => 'fb-photos',
+      'albums'      => 'fb-album',
+      'default'     => 'fb-object'
     ];
 
     protected $defaultMethod = 'GET';
-
-    protected $defaultParameters = ['fields' => 'type', 'limit' => 15];
-
-    protected $defaultFilter = ['filter' => ['type' => 'status']];
-
-
-
 
     public function __construct(View $view)
     {
@@ -71,20 +64,11 @@ class FacebookFieldBuilder
 
     public function getDefaultCssClasses($type)
     {
-        if(isset($this->defaultCssClasses[$type]))
-        {
+        if (isset($this->defaultCssClasses[$type])) {
             return $this->defaultCssClasses[$type];
         }
 
-        return$this->defaultCssClasses['default'];
-    }
-
-    /**
-     * @return string
-     */
-    public function getDefaultUser()
-    {
-        return env('FB_PAGE_ID', 'id');
+        return $this->defaultCssClasses['default'];
     }
 
     /**
@@ -95,21 +79,6 @@ class FacebookFieldBuilder
         return $this->defaultMethod;
     }
 
-    /**
-     * @return array
-     */
-    public function getDefaultParameters()
-    {
-       return $this->defaultParameters;
-    }
-
-    /**
-     * @return array
-     */
-    public function getDefaultFilter()
-    {
-        return $this->defaultFilter;
-    }
 
     protected function getRequestPath($request)
     {
@@ -155,15 +124,6 @@ class FacebookFieldBuilder
 
     }
 
-    public function buildUser(&$attributes)
-    {
-        if(!isset($attributes['user'])) {
-            $attributes['user'] = $this->getDefaultUser();
-        }
-
-        return array_pull($attributes,'user');
-    }
-
     public function buildCssClasses($type, &$attributes)
     {
         $defaultCssClasses = $this->getDefaultCssClasses($type);
@@ -185,42 +145,52 @@ class FacebookFieldBuilder
             $filter = array_pull($attributes, 'filter');
             return $filter;
         }
+        return false;
+    }
 
-        $defaultFilter = $this->getDefaultFilter();
+    public function buildPath($path, &$attributes)
+    {
+        if(!$path)
+        {
+            return '/' . getenv('FB_PAGE_ID');
+        }
 
-        return $defaultFilter['filter'];
+        $absolute = false;
+        if(array_has($attributes, 'absolute'))
+        {
+            $absolute = array_pull($attributes, 'absolute');
+        }
+
+        if(!$absolute)
+        {
+            return '/' . getenv('FB_PAGE_ID') . '/' . $path;
+        }
+        else
+        {
+            return '/' . $path;
+        }
     }
 
     public function buildParameters(&$attributes)
     {
-        $defaultParameters = $this->getDefaultParameters();
-
-        foreach(array_keys($defaultParameters) as $defaultParameter)
+        $parameters = [];
+        foreach ($attributes as $parameter => $value)
         {
-            if(!isset($attributes[$defaultParameter]))
+            if(is_array($value))
             {
-                $attributes[$defaultParameter] = $defaultParameters[$defaultParameter];
+                $values = $this->arrayToParameter($value);
+                $nestedParameters[$parameter] = $values;
+                dd($nestedParameters);
             }
             else
             {
-                $attributes[$defaultParameter] .= ','.$defaultParameters[$defaultParameter];
+                $parameters[$parameter] = $value;
             }
         }
 
-        foreach(array_keys($attributes) as $attribute)
-        {
-            if(strpos($attributes[$attribute],'null') !== false)
-            {
-                array_pull($attributes, $attribute);
-            }
-        }
+        return $parameters;
 
-        return $attributes;
-    }
 
-    public function buildPath($type, $user)
-    {
-        return '/' . $user . '/' . $type;
     }
 
     public function buildRequest($method, $path, $parameters)
@@ -244,14 +214,15 @@ class FacebookFieldBuilder
 
     }
 
-    public function buildData($response)
+    public function buildData($response, $type, $filter, $perPage)
     {
-        return $response->getProperty('data')->asArray();
+        $data = $response->getProperty('data')->asArray();
+        return $this->resolveData($type, $data, $filter, $perPage);
     }
 
-    public function resolveData($type, $data, $filter)
+    public function resolveData($type, $data, $filter, $perPage)
     {
-        $dataResolver = new FacebookDataResolver($type, $data, $filter);
+        $dataResolver = new FacebookDataResolver($type, $data, $filter, $perPage);
         return $dataResolver->getResolvedData();
 
     }
@@ -267,21 +238,76 @@ class FacebookFieldBuilder
     }
 
 
-    public function graphObject($type, $attributes = [])
+    public function graphObject($type, $path = null, $attributes = [], $perPage = null)
     {
         $method = $this->buildMethod($attributes);
         $class = $this->buildCssClasses($type, $attributes);
-        $user = $this->buildUser($attributes);
         $filter = $this->buildFilter($attributes);
+        $requestPath = $this->buildPath($path, $attributes);
+//        dd($requestPath);
         $parameters = $this->buildParameters($attributes);
-        $path = $this->buildPath($type, $user);
-        $request = $this->buildRequest($method, $path, $parameters);
+//        dd($parameters);
+        $request = $this->buildRequest($method, $requestPath, $parameters);
+//        dd($request);
         $response = $this->buildResponse($request);
-        $data = $this->buildData($response);
-        $resolvedData = $this->resolveData($type, $data, $filter);
+//        dd($response);
+        $data = $this->buildData($response, $type, $filter, $perPage);
+//        dd($data);
         $template = $this->buildTemplate($type);
 
-        return $this->view->make($template, compact('resolvedData', 'class'));
+        return $this->view->make($template, compact('data', 'class'));
+
+    }
+
+    public function albumPhotos($albumId, $attributes = [], $perPage = null)
+    {
+        $type = 'albumPhotos';
+
+        $path = $albumId;
+
+        return call_user_func_array([$this, 'graphObject'], compact('type', 'path', 'attributes', 'perPage'));
+    }
+
+    public function arrayToParameter($value)
+    {
+        $allString = true;
+        $limit = '';
+        foreach($value as $nestedValue)
+        {
+//            dd($nestedValue);
+            $nestedParameter = [];
+            if(is_array($nestedValue))
+            {
+                $allString = false;
+                $nestedParameter[$nestedKey] = $this->arrayToParameter($nestedValue);
+                array_pull($value, $nestedKey);
+
+            }
+            if($nestedKey == 'limit')
+            {
+              dd($nestedKey);
+                $limit = '.limit('.$nestedValue.')';
+                array_pull($value, 'limit');
+            }
+        }
+
+        if($allString)
+        {
+            return implode(',', $value);
+        }
+        else
+        {
+            $simpleValues = implode(',', $value);
+            $nestedValues = '';
+            foreach($nestedParameter as $nestedKey => $nestedValue)
+            {
+                $nestedValues .= ',' . $nestedKey . $limit . '{' . $nestedValue . '}';
+            }
+
+            dd($nestedValues);
+
+            return $simpleValues . $nestedValues;
+        }
 
     }
 

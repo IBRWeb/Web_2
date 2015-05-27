@@ -22,11 +22,19 @@ Route::group(['namespace' => 'Devotional', 'prefix' => 'devocional'], function()
     Route::get('tag/{tag}', ['as' => 'tagPosts', 'uses' => 'DevotionalController@tagPosts' ]);
 });
 
-Route::group(['namespace' => 'Gallery', 'prefix' => 'gallery'], function()
+Route::group(['namespace' => 'Gallery', 'prefix' => 'galeria'], function()
 {
-    Route::get('albums', ['as' => 'gallery.albums', 'uses' => 'GalleryController@showAlbums']);
+    Route::get('', ['as' => 'gallery.albums', 'uses' => 'GalleryController@showAlbums']);
 
-    Route::resource('albums.photos', 'GalleryController');
+    Route::resource('album.photos', 'GalleryController',
+        [
+            'except' => [ 'destroy', 'edit', 'update'],
+            'names' => [
+                'index'  => 'gallery.index',
+                'create' => 'gallery.create',
+                'store'  => 'gallery.store',
+                'show'   => 'gallery.show'
+            ]]);
 
 });
 

@@ -10,23 +10,25 @@ class GalleryController extends Controller {
 
     protected $view;
 
-    public function __construct(View $view)
+    public function __construct(View $view, Request $request)
     {
         $this->view = $view;
+        $this->request = $request;
     }
 
     public function showAlbums()
     {
-        return \View::make('gallery.albums');
+        return $this->view->make('gallery.albums');
     }
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
-	public function index($albumId)
+	public function index($albumName)
 	{
-		//
+		$albumId = $this->request->get('id');
+        return $this->view->make('gallery.albumPhotos', compact('albumId'));
 	}
 
 	/**

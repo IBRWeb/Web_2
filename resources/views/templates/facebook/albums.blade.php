@@ -6,25 +6,28 @@
 @endsection
 
 
+@for($index = ($data->currentPage()-1)*$data->perPage(); $index < $data->currentPage()*$data->perPage(); $index++)
 
-    @foreach($resolvedData as $album)
-    <div class="{{ $class }}">
-        <a id="photos_container_link" href="{{ route('gallery.albums.photos.index', [ str_slug($album['name']), $album['id']]) }}">
-            <div class="album_cover_photos_container" id="photos_container" >
-                @foreach($album['coverPhotos'] as $coverPhoto)
-                    <div class="album_cover_photo" id="photo">
+        <div class="{{ $class }}">
+            <a id="photos_container_link" href="{{ route('gallery.index', [ str_slug($data[$index]['name']), 'id' => $data[$index]['id']]) }}">
+                <div class="album_cover_photos_container" id="photos_container" >
+                    @foreach($data[$index]['coverPhotos'] as $coverPhoto)
+                        <div class="album_cover_photo" id="photo">
 
-                        @if($coverPhoto->height < $coverPhoto->width)
-                            <img class="imgFitHeight" id="photo" src="{{ $coverPhoto->source }}" class="album_cover_photo" >
-                        @else
-                            <img class="imgFitWidth" id="photo" src="{{ $coverPhoto->source }}" class="album_cover_photo" >
-                        @endif
-                    </div>
-                @endforeach
-            </div>
-        </a>
+                            @if($coverPhoto->height < $coverPhoto->width)
+                                <img class="imgFitHeight album_cover_photo" id="photo" src="{{ $coverPhoto->source }}" >
+                            @else
+                                <img class="imgFitWidth album_cover_photo" id="photo" src="{{ $coverPhoto->source }}" >
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
+            </a>
 
-        <h5 class="album_title">{{ $album['name'] }}</h5>
+            <h5 class="album_title">{{ $data[$index]['name'] }}</h5>
 
-    </div>
-    @endforeach
+        </div>
+
+@endfor
+{!! $data->render() !!}
+

@@ -12,7 +12,7 @@ class DevotionalRepo {
 
 	public function getDevotionalPosts($title, $take = 10) {
 
-		 return $this->devotionalPost->title($title)->with('tags', 'image')->paginate($take);
+		 return dd($this->devotionalPost->title($title)->with('tags', 'image')->paginate($take));
 
 		
 	}

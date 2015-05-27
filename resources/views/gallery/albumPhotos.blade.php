@@ -6,9 +6,9 @@
     </figure>
 
     <div class="main flexbox spc_arr">
-        <div class="content flexbox wrap spc_arr">
+        <div class="content flexbox spc_arr wrap">
 
-            {!! FacebookField::albums('albums', ['fields' => ['name', 'photos' => ['limit' => 5, 'images']], 'filter' => ['type' => 'normal']]) !!}
+            {{ FacebookField::albumPhotos($albumId, ['fields' => 'images', 'limit' => '50']) }}
 
         </div>
     </div>
