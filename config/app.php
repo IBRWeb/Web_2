@@ -148,11 +148,6 @@ return [
         'App\Providers\FacebookFieldServiceProvider',
 
         /*
-         * Laravel ide-helper provider
-         */
-        'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
-
-        /*
         * Laravel colective
         */
         'Collective\Html\HtmlServiceProvider',
@@ -161,10 +156,7 @@ return [
         * Admin Panel
         */
         'SleepingOwl\Admin\AdminServiceProvider',
-        /*
-        * Debugbar
-        */
-        'Barryvdh\Debugbar\ServiceProvider',
+
     ],
 
 	/*
