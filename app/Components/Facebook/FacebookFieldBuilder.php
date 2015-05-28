@@ -238,34 +238,15 @@ class FacebookFieldBuilder
     }
 
 
-    public function graphObject($type, $path = null, $attributes = [], $perPage = null)
+    public function request($path = null, $attributes = [])
     {
         $method = $this->buildMethod($attributes);
-        $class = $this->buildCssClasses($type, $attributes);
-        $filter = $this->buildFilter($attributes);
         $requestPath = $this->buildPath($path, $attributes);
-//        dd($requestPath);
         $parameters = $this->buildParameters($attributes);
-//        dd($parameters);
         $request = $this->buildRequest($method, $requestPath, $parameters);
-//        dd($request);
         $response = $this->buildResponse($request);
-//        dd($response);
-        $data = $this->buildData($response, $type, $filter, $perPage);
-//        dd($data);
-        $template = $this->buildTemplate($type);
 
-        return $this->view->make($template, compact('data', 'class'));
-
-    }
-
-    public function albumPhotos($albumId, $attributes = [], $perPage = null)
-    {
-        $type = 'albumPhotos';
-
-        $path = $albumId;
-
-        return call_user_func_array([$this, 'graphObject'], compact('type', 'path', 'attributes', 'perPage'));
+        return $response;
     }
 
     public function arrayToParameter($value)
